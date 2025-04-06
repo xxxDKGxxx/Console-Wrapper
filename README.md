@@ -1,4 +1,4 @@
-# JetBrains_rekrutacja
+# Console-Wrapper
 
 This project is a Windows Forms application that allows executing system commands in either **CMD** or **PowerShell** and displays the command output in a real-time console-like interface. The application observes the output from both standard output (STDOUT) and error output (STDERR) streams and displays them with different colors for distinction.
 
