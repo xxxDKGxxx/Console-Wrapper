@@ -4,26 +4,36 @@ using System.Text.RegularExpressions;
 
 namespace JetBrains_rekrutacja
 {
-
+    /// <summary>
+    /// Enumeration representing the console types (CMD or PowerShell).
+    /// </summary>
     public enum ConsoleType
     {
         CMD,
         POWERSHELL
     }
 
+    /// <summary>
+    /// Enumeration representing the stream types (STDOUT or STDERR).
+    /// </summary>
     public enum StreamType
     {
         STDOUT,
         STDERR
     }
 
+    /// <summary>
+    /// Main form for the application, implementing IStreamObserver to handle the output streams.
+    /// </summary>
     public partial class Form1 : Form, IStreamObserver
     {
+        private SynchronizationContext synchronizationContext;
 
-        SynchronizationContext synchronizationContext;
         private ConsoleType consoleType = ConsoleType.CMD;
 
-
+        /// <summary>
+        /// Initializes the form and subscribes to the process executor for output notifications.
+        /// </summary>
         public Form1()
         {
             InitializeComponent();
@@ -45,6 +55,11 @@ namespace JetBrains_rekrutacja
 
         }
 
+        /// <summary>
+        /// Event handler for key press in the input text box. Executes the command when Enter is pressed.
+        /// </summary>
+        /// <param name="sender">The object that triggered the event.</param>
+        /// <param name="e">Event arguments containing the key press information.</param>
         private async void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar != (char)Keys.Enter) return;
@@ -61,6 +76,9 @@ namespace JetBrains_rekrutacja
             OutputTextBox.AppendText($"Execution finished! Time: {sw.Elapsed.TotalSeconds:F3}s\n");
         }
 
+        /// <summary>
+        /// Event handler for CMD console type button click. Switches the console type to CMD.
+        /// </summary>
         private void consoleChooserCMD_Click(object sender, EventArgs e)
         {
             consoleType = ConsoleType.CMD;
@@ -70,6 +88,9 @@ namespace JetBrains_rekrutacja
             consoleChooserCMD.BackColor = Color.Pink;
         }
 
+        /// <summary>
+        /// Event handler for PowerShell console type button click. Switches the console type to PowerShell.
+        /// </summary>
         private void consoleChooserPowerShell_Click(object sender, EventArgs e)
         {
             consoleType = ConsoleType.POWERSHELL;
@@ -79,6 +100,12 @@ namespace JetBrains_rekrutacja
             consoleChooserCMD.BackColor = Color.Gray;
         }
 
+        /// <summary>
+        /// Method that handles notifications about command output or error.
+        /// Updates the UI to show STDOUT in green and STDERR in red.
+        /// </summary>
+        /// <param name="output">The output string to display.</param>
+        /// <param name="st">The type of stream (STDOUT or STDERR).</param>
         public void Notify(string output, StreamType st)
         {
             try
@@ -111,14 +138,22 @@ namespace JetBrains_rekrutacja
             }
         }
 
+        /// <summary>
+        /// Event handler for form closing. Cancels the process if it is running.
+        /// </summary>
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             ProcessExecutor.GetInstance().Cancel();
         }
 
+        /// <summary>
+        /// Event handler for key down in the input text box. Cancels the running process if Ctrl+C is pressed.
+        /// </summary>
+        /// <param name="sender">The object that triggered the event.</param>
+        /// <param name="e">Event arguments containing the key down information.</param>
         private void InputTextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Control && e.KeyCode == Keys.C && ProcessExecutor.GetInstance().IsRunning)
+            if (e.Control && e.KeyCode == Keys.C && ProcessExecutor.GetInstance().IsRunning)
             {
                 ProcessExecutor.GetInstance().Cancel();
                 OutputTextBox.SelectionColor = Color.White;
