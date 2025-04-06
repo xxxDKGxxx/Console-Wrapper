@@ -53,7 +53,7 @@ The primary components of the project include:
 
 If you want to cancel a running command:
 
-- You can stop the execution by clicking the **Cancel** button (if implemented).
+- You can stop the execution by clicking Ctrl + C combination on your keyboard when focused in the text input control.
 - The process will be killed and the output will be terminated.
 
 ## Code Overview
@@ -96,10 +96,6 @@ This interface defines a method `Notify` that is used to push output to any obse
 ### ISubject Interface
 
 Defines methods for subscribing and unsubscribing observers. The `ProcessExecutor` class implements this interface to notify subscribed components (observers) about new output or errors.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
