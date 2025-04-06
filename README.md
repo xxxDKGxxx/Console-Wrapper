@@ -53,7 +53,7 @@ The primary components of the project include:
 
 If you want to cancel a running command:
 
-- You can stop the execution by clicking Ctrl + C combination on your keyboard when focused in the text input control.
+- You can stop the execution by clicking the Ctrl + C combination on your keyboard when focused in the text input control.
 - The process will be killed and the output will be terminated.
 
 ## Code Overview
