@@ -27,7 +27,7 @@ namespace JetBrains_rekrutacja
         private static object _lock = new object();
         CancellationTokenSource? source = null;
         Process? p = null;
-
+        public bool IsRunning => p != null && source != null;
         private List<IStreamObserver> _observers;
         private ProcessExecutor()
         {
@@ -88,12 +88,14 @@ namespace JetBrains_rekrutacja
 
         public void Cancel()
         {
-            _observers.Clear();
-            if(source != null)
+            if(source != null && p != null)
             {
                 p.Kill();
                 source.Cancel();
             }
+
+            source = null;
+            p = null;
         }
     }
 }

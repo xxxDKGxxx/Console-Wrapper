@@ -21,12 +21,6 @@ namespace JetBrains_rekrutacja
     {
 
         SynchronizationContext synchronizationContext;
-
-        private readonly Dictionary<ConsoleType, string> consoles = new Dictionary<ConsoleType, string>
-        {
-            { ConsoleType.CMD, "cmd.exe"},
-            {ConsoleType.POWERSHELL, "PowerShell.exe" }
-        };
         private ConsoleType consoleType = ConsoleType.CMD;
 
 
@@ -120,6 +114,16 @@ namespace JetBrains_rekrutacja
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             ProcessExecutor.GetInstance().Cancel();
+        }
+
+        private void InputTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Control && e.KeyCode == Keys.C && ProcessExecutor.GetInstance().IsRunning)
+            {
+                ProcessExecutor.GetInstance().Cancel();
+                OutputTextBox.SelectionColor = Color.White;
+                OutputTextBox.AppendText("\nExecution Canceled.\n");
+            }
         }
     }
 }

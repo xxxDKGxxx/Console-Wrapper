@@ -48,6 +48,7 @@
             InputTextBox.Name = "InputTextBox";
             InputTextBox.Size = new Size(867, 27);
             InputTextBox.TabIndex = 0;
+            InputTextBox.KeyDown += InputTextBox_KeyDown;
             InputTextBox.KeyPress += textBox1_KeyPress;
             // 
             // OutputTextBox
